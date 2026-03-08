@@ -12,3 +12,4 @@ backend/KidsCartoonPipeline.Tests/obj/*
 backend/KidsCartoonPipeline.Worker/obj/*
 backend/storage/*
 backend/KidsCartoonPipeline.API/storage/*
+backend/KidsCartoonPipeline.API/logs/*
