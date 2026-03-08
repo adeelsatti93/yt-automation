@@ -20,14 +20,17 @@ public class PipelineOrchestrator : IPipelineOrchestrator
     private readonly IVoiceGenerationService _voiceService;
     private readonly IMusicGenerationService _musicService;
     private readonly IVideoAssemblyService _videoService;
+    private readonly IAnimationService _animationService;
     private readonly ISeoGenerationService _seoService;
+    private readonly ISettingsService _settings;
     private readonly ILogger<PipelineOrchestrator> _logger;
 
     public PipelineOrchestrator(
         IEpisodeRepository episodes, ICharacterRepository characters, IPipelineJobRepository jobs,
         IScriptGenerationService scriptService, IImageGenerationService imageService,
         IVoiceGenerationService voiceService, IMusicGenerationService musicService,
-        IVideoAssemblyService videoService, ISeoGenerationService seoService,
+        IVideoAssemblyService videoService, IAnimationService animationService,
+        ISeoGenerationService seoService, ISettingsService settings,
         ILogger<PipelineOrchestrator> logger)
     {
         _episodes = episodes;
@@ -38,7 +41,9 @@ public class PipelineOrchestrator : IPipelineOrchestrator
         _voiceService = voiceService;
         _musicService = musicService;
         _videoService = videoService;
+        _animationService = animationService;
         _seoService = seoService;
+        _settings = settings;
         _logger = logger;
     }
 
@@ -244,8 +249,40 @@ public class PipelineOrchestrator : IPipelineOrchestrator
                 case PipelineStage.VideoAssembly:
                     episode.Status = EpisodeStatus.RenderingVideo;
                     await _episodes.UpdateAsync(episode);
-                    _logger.LogInformation("    Assembling video with FFmpeg...");
-                    episode.VideoPath = await _videoService.AssembleVideoAsync(episode);
+                    var provider = await _settings.GetAsync("Video:Provider") ?? "FFmpeg";
+                    _logger.LogInformation("    Video provider: {Provider}", provider);
+
+                    if (provider.Equals("Kling", StringComparison.OrdinalIgnoreCase))
+                    {
+                        // --- Kling AI path: animate each scene, then FFmpeg concat ---
+                        var episodeDir = $"videos/ep{episodeId}";
+                        var klingScenes = episode.Scenes.OrderBy(s => s.SceneNumber).ToList();
+                        var semaphore = new SemaphoreSlim(2); // max 2 parallel Kling jobs
+                        var clipPaths = new string[klingScenes.Count];
+
+                        var tasks = klingScenes.Select(async (scene, idx) =>
+                        {
+                            await semaphore.WaitAsync();
+                            try
+                            {
+                                _logger.LogInformation("    [Kling] Animating scene {Current}/{Total}...",
+                                    idx + 1, klingScenes.Count);
+                                clipPaths[idx] = await _animationService.AnimateSceneAsync(scene, episodeId, episodeDir);
+                            }
+                            finally { semaphore.Release(); }
+                        });
+                        await Task.WhenAll(tasks);
+
+                        // Use FFmpeg only to stitch clips + mix background music
+                        episode.VideoPath = await _videoService.AssembleFromClipsAsync(
+                            clipPaths.ToList(), episode);
+                    }
+                    else
+                    {
+                        // --- FFmpeg path: Ken Burns + animated subtitles slideshow ---
+                        episode.VideoPath = await _videoService.AssembleVideoAsync(episode);
+                    }
+
                     await _episodes.UpdateAsync(episode);
                     _logger.LogInformation("    Video assembled: {Path}", episode.VideoPath);
                     break;

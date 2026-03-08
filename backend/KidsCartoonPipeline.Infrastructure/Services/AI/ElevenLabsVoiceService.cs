@@ -27,7 +27,14 @@ public class ElevenLabsVoiceService : IVoiceGenerationService
     public async Task<string> GenerateDialogueAudioAsync(DialogueLine line, Character character, int episodeId)
     {
         var apiKey = await _settings.GetApiKeyAsync("ElevenLabs");
-        var voiceId = character.VoiceId ?? await _settings.GetAsync("ElevenLabs:DefaultVoiceId") ?? "21m00Tcm4TlvDq8ikWAM";
+        var rawVoiceId = character.VoiceId ?? await _settings.GetAsync("ElevenLabs:DefaultVoiceId") ?? "21m00Tcm4TlvDq8ikWAM";
+
+        // ElevenLabs voice IDs are alphanumeric, ~20 chars, no spaces.
+        // If the stored value looks like a display name, resolve to real ID.
+        var voiceId = await ResolveVoiceIdAsync(rawVoiceId, character.VoiceName, apiKey);
+
+        _logger.LogInformation("    TTS: character={Character} rawVoiceId={Raw} resolvedId={Resolved}",
+            character.Name, rawVoiceId, voiceId);
 
         var request = new
         {
@@ -53,6 +60,51 @@ public class ElevenLabsVoiceService : IVoiceGenerationService
 
         _logger.LogInformation("Generated audio for episode {EpisodeId}, line {LineOrder}", episodeId, line.LineOrder);
         return relativePath;
+    }
+
+    /// <summary>
+    /// ElevenLabs voice IDs are alphanumeric strings (~20 chars, no spaces).
+    /// If the stored value has spaces or dashes (looks like a display name), fetch voices and resolve by name.
+    /// </summary>
+    private async Task<string> ResolveVoiceIdAsync(string rawId, string? voiceName, string apiKey)
+    {
+        // Real ElevenLabs IDs: no spaces, typically 20 alphanumeric chars
+        if (!rawId.Contains(' ') && !rawId.Contains('-') && rawId.Length >= 10)
+            return rawId; // Looks like a real ID already
+
+        // rawId looks like a display name — resolve it
+        var searchName = rawId; // e.g. "Eric - Smooth, Trustworthy"
+
+        try
+        {
+            using var req = new HttpRequestMessage(HttpMethod.Get, "v1/voices");
+            req.Headers.Add("xi-api-key", apiKey);
+            var res = await _httpClient.SendAsync(req);
+            if (!res.IsSuccessStatusCode) return rawId; // Best effort — let ElevenLabs give the real error
+
+            var body = await res.Content.ReadAsStringAsync();
+            var voices = JsonSerializer.Deserialize<VoicesResponse>(body)?.Voices ?? [];
+
+            // Try exact name match first, then partial match
+            var match = voices.FirstOrDefault(v =>
+                string.Equals(v.Name, searchName, StringComparison.OrdinalIgnoreCase))
+                ?? voices.FirstOrDefault(v =>
+                    v.Name != null && v.Name.StartsWith(searchName.Split(' ')[0], StringComparison.OrdinalIgnoreCase));
+
+            if (match?.VoiceId != null)
+            {
+                _logger.LogInformation("    Resolved voice name '{Name}' → ID '{Id}'", searchName, match.VoiceId);
+                return match.VoiceId;
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning("Voice name resolution failed: {Error}", ex.Message);
+        }
+
+        // Could not resolve — use the fallback default
+        _logger.LogWarning("Could not resolve voice '{Name}' — using default voice", searchName);
+        return "21m00Tcm4TlvDq8ikWAM"; // Rachel (ElevenLabs default, always exists)
     }
 
     public async Task<List<VoiceInfo>> GetAvailableVoicesAsync()

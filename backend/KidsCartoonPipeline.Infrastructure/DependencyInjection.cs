@@ -55,6 +55,7 @@ public static class DependencyInjection
 
         // Video & YouTube
         services.AddScoped<IVideoAssemblyService, FfmpegVideoService>();
+        services.AddHttpClient<IAnimationService, KlingAnimationService>();
         services.AddScoped<IYouTubeService, YouTubeUploadService>();
 
         // Pipeline

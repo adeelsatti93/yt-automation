@@ -13,6 +13,7 @@ const API_KEY_SERVICES = [
   { key: 'OpenAI:ApiKey', label: 'OpenAI (DALL·E 3)', description: 'Image generation', helpUrl: 'https://platform.openai.com/api-keys' },
   { key: 'ElevenLabs:ApiKey', label: 'ElevenLabs', description: 'Voice / TTS generation', helpUrl: 'https://elevenlabs.io/subscription' },
   { key: 'Suno:ApiKey', label: 'Suno', description: 'Background music generation (optional)', helpUrl: null },
+  { key: 'Fal:ApiKey', label: 'Fal.ai (Kling Animation)', description: 'AI cartoon animation with lip sync — optional, needed for Kling video engine', helpUrl: 'https://fal.ai/dashboard' },
 ];
 
 const TABS = [
@@ -222,6 +223,52 @@ export default function Settings() {
       {activeTab === 'pipeline' && (
         <SettingsSection title="Pipeline Configuration" icon="bi-gear">
           <div className="row g-3">
+            {/* Video Engine Selector */}
+            <div className="col-12">
+              <div className="card border mb-1">
+                <div className="card-body py-3">
+                  <h6 className="mb-3 fw-semibold"><i className="bi bi-camera-video me-2 text-primary"></i>Video Engine</h6>
+                  <div className="row g-3">
+                    <div className="col-md-6">
+                      <div
+                        className={`p-3 rounded h-100 ${getValue('Video:Provider') !== 'Kling' ? 'border border-primary bg-primary bg-opacity-10' : 'border'}`}
+                        style={{ cursor: 'pointer' }}
+                        onClick={() => handleSave('Video:Provider', 'FFmpeg')}
+                      >
+                        <div className="d-flex align-items-center gap-2 mb-2">
+                          <i className="bi bi-film text-primary fs-4"></i>
+                          <div>
+                            <div className="fw-bold">FFmpeg 2D</div>
+                            <small className="text-success fw-semibold">Free</small>
+                          </div>
+                        </div>
+                        <small className="text-muted">Ken Burns zoom/pan, animated subtitles, background music mixing. No extra cost.</small>
+                      </div>
+                    </div>
+                    <div className="col-md-6">
+                      <div
+                        className={`p-3 rounded h-100 ${getValue('Video:Provider') === 'Kling' ? 'border border-primary bg-primary bg-opacity-10' : 'border'}`}
+                        style={{ cursor: 'pointer' }}
+                        onClick={() => handleSave('Video:Provider', 'Kling')}
+                      >
+                        <div className="d-flex align-items-center gap-2 mb-2">
+                          <i className="bi bi-stars text-warning fs-4"></i>
+                          <div>
+                            <div className="fw-bold">Kling AI Animation</div>
+                            <small className="text-warning fw-semibold">~$6/episode</small>
+                          </div>
+                        </div>
+                        <small className="text-muted">Real AI cartoon animation with character movement + lip sync. Requires Fal.ai API key in the API Keys tab.</small>
+                        {getValue('Video:Provider') === 'Kling' && !getValue('Fal:ApiKey') && (
+                          <div className="mt-2"><small className="text-danger"><i className="bi bi-exclamation-triangle me-1"></i>Add your Fal.ai API key in API Keys tab.</small></div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {/* Pipeline fields */}
             <div className="col-md-6">
               <label className="form-label">Auto-run Pipeline</label>
               <select
