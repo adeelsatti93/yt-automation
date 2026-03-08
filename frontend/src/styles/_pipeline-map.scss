@@ -1,0 +1,118 @@
+@import 'variables';
+@import 'mixins';
+
+.pipeline-map-wrapper {
+  background: white;
+  background-image: 
+    radial-gradient(circle at 1px 1px, #f1f5f9 1px, transparent 0);
+  background-size: 32px 32px; // Clean gray dotted board
+  width: 100%;
+  height: calc(100vh - 72px); 
+  position: relative;
+  overflow: hidden;
+  border-radius: $radius-xl;
+  border: 1px solid $border-color;
+  box-shadow: inset 0 2px 10px rgba(0,0,0,0.02);
+}
+
+.system-node-card {
+  background: white;
+  width: 250px;
+  padding: 2.25rem 2rem;
+  border: 1px solid #e2e8f0;
+  border-radius: $radius-xl;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
+  z-index: 10;
+  text-align: center;
+
+  &:hover {
+    transform: translate(-50%, -55%) scale(1.05); 
+    border-color: $primary;
+    box-shadow: 
+      0 20px 25px -5px rgba(0, 0, 0, 0.1), 
+      0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    
+    .node-icon-wrapper {
+      background: $primary;
+      color: white;
+      transform: scale(1.1);
+      box-shadow: 0 10px 15px rgba(79, 70, 229, 0.3);
+    }
+
+    .node-title {
+      color: $primary;
+    }
+  }
+
+  &.active-node {
+    border-color: $primary;
+    box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.1);
+  }
+}
+
+.node-icon-wrapper {
+  width: 60px;
+  height: 60px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+  margin: 0 auto 1.5rem;
+  @include flex-center;
+  font-size: 1.75rem;
+  color: #64748b;
+  transition: all 0.3s ease;
+}
+
+.node-title {
+  color: $text-main;
+  font-family: $font-headings;
+  font-weight: 800;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  transition: color 0.3s ease;
+}
+
+.node-desc {
+  color: #64748b;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+}
+
+.flow-path {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+
+  path {
+    stroke: #cbd5e1; // Slate 300 for lines
+    stroke-width: 2;
+    fill: none;
+    stroke-dasharray: 8 8;
+    animation: flowDash 25s linear infinite;
+  }
+}
+
+@keyframes flowDash {
+  to { stroke-dashoffset: -1000; }
+}
+
+.node-tag {
+  background: #f1f5f9;
+  color: #475569;
+  font-size: 0.625rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  padding: 0.35rem 0.65rem;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+  letter-spacing: 0.05em;
+}

@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "KidsCartoonPipeline.API\\KidsCartoonPipeline.API.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "KidsCartoonPipeline.Worker\\KidsCartoonPipeline.Worker.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

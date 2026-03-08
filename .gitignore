@@ -1,0 +1,14 @@
+backend/.vs/*
+frontend/node_modules/*
+backend/KidsCartoonPipeline.API/bin/*
+backend/KidsCartoonPipeline.Core/bin/*
+backend/KidsCartoonPipeline.Infrastructure/bin/*
+backend/KidsCartoonPipeline.Tests/bin/*
+backend/KidsCartoonPipeline.Worker/bin/*
+backend/KidsCartoonPipeline.API/obj/*
+backend/KidsCartoonPipeline.Core/obj/*
+backend/KidsCartoonPipeline.Infrastructure/obj/*
+backend/KidsCartoonPipeline.Tests/obj/*
+backend/KidsCartoonPipeline.Worker/obj/*
+backend/storage/*
+backend/KidsCartoonPipeline.API/storage/*

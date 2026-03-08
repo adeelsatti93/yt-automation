@@ -1,0 +1,73 @@
+@import 'variables';
+@import 'mixins';
+
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+  background-color: $background; // slate 50
+  color: $text-main;
+  overflow: hidden;
+}
+
+.main-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  transition: padding-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.content-wrapper {
+  flex: 1;
+  padding: 2.5rem;
+  overflow-y: auto;
+  @include custom-scrollbar;
+  animation: pageEnter 0.4s ease-out;
+}
+
+@keyframes pageEnter {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.section-label {
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: $primary;
+  margin-bottom: 0.75rem;
+  display: block;
+}
+
+// Side drawers for config etc.
+.side-drawer {
+  @include surface-card($padding: 0, $shadow: $shadow-xl);
+  position: fixed;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 440px;
+  z-index: 2000;
+  transform: translateX(100%);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  border-left: 1px solid $border-color;
+  border-radius: 0;
+  
+  &.active {
+    transform: translateX(0);
+  }
+
+  .drawer-header {
+    padding: 2rem;
+    border-bottom: 1px solid $border-color;
+    @include flex-between;
+  }
+
+  .drawer-content {
+    padding: 2rem;
+    height: calc(100% - 100px);
+    overflow-y: auto;
+    @include custom-scrollbar;
+  }
+}

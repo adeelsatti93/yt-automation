@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="KidsCartoonPipeline.API/KidsCartoonPipeline.API.csproj" />
+  <Project Path="KidsCartoonPipeline.Core/KidsCartoonPipeline.Core.csproj" />
+  <Project Path="KidsCartoonPipeline.Infrastructure/KidsCartoonPipeline.Infrastructure.csproj" />
+  <Project Path="KidsCartoonPipeline.Tests/KidsCartoonPipeline.Tests.csproj" />
+  <Project Path="KidsCartoonPipeline.Worker/KidsCartoonPipeline.Worker.csproj" />
+</Solution>

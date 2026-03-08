@@ -1,0 +1,240 @@
+2026-03-08 08:28:08.633 +05:00 [INF] DB tables already exist. Exit install
+2026-03-08 08:28:08.824 +05:00 [INF] Starting Hangfire Server using job storage: 'Server: localhost@KidsCartoonPipeline'
+2026-03-08 08:28:08.827 +05:00 [INF] Using the following options for SQL Server job storage:
+2026-03-08 08:28:08.828 +05:00 [INF]     Queue poll interval: 00:00:15.
+2026-03-08 08:28:08.829 +05:00 [INF] Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2026-03-08 08:28:08.866 +05:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-03-08 08:28:08.868 +05:00 [INF] Hosting environment: Development
+2026-03-08 08:28:08.869 +05:00 [INF] Content root path: F:\Projects\YT-Automation\backend\KidsCartoonPipeline.Worker
+2026-03-08 08:28:08.875 +05:00 [INF] Server desktop-20mad7m:49248:6e046160 successfully announced in 7.8733 ms
+2026-03-08 08:28:08.879 +05:00 [INF] Server desktop-20mad7m:49248:6e046160 is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2026-03-08 08:28:09.109 +05:00 [INF] Server desktop-20mad7m:49248:6e046160 all the dispatchers started
+2026-03-08 08:30:10.771 +05:00 [INF] PipelineTriggerJob started
+2026-03-08 08:30:14.623 +05:00 [INF] Executed DbCommand (14ms) [Parameters=[@__key_0='?' (Size = 200)], CommandType='"Text"', CommandTimeout='30']
+SELECT `a`.`Id`, `a`.`Category`, `a`.`CreatedAt`, `a`.`Description`, `a`.`DisplayName`, `a`.`IsRequired`, `a`.`IsSecret`, `a`.`Key`, `a`.`UpdatedAt`, `a`.`Value`
+FROM `AppSettings` AS `a`
+WHERE `a`.`Key` = @__key_0
+LIMIT 1
+2026-03-08 08:30:14.839 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[@__key_0='?' (Size = 200)], CommandType='"Text"', CommandTimeout='30']
+SELECT `a`.`Id`, `a`.`Category`, `a`.`CreatedAt`, `a`.`Description`, `a`.`DisplayName`, `a`.`IsRequired`, `a`.`IsSecret`, `a`.`Key`, `a`.`UpdatedAt`, `a`.`Value`
+FROM `AppSettings` AS `a`
+WHERE `a`.`Key` = @__key_0
+LIMIT 1
+2026-03-08 08:30:15.022 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `e`.`Id`, `e`.`AudioMixPath`, `e`.`CreatedAt`, `e`.`CurrentStageError`, `e`.`Moral`, `e`.`PublishedAt`, `e`.`RetryCount`, `e`.`ReviewNotes`, `e`.`ReviewedAt`, `e`.`ScheduledPublishAt`, `e`.`SeoDescription`, `e`.`SeoTags`, `e`.`SeoTitle`, `e`.`Status`, `e`.`Summary`, `e`.`ThumbnailPath`, `e`.`Title`, `e`.`TopicSeedId`, `e`.`UpdatedAt`, `e`.`VideoPath`, `e`.`YouTubeUrl`, `e`.`YouTubeVideoId`
+FROM `Episodes` AS `e`
+WHERE `e`.`Status` NOT IN ('PendingReview', 'Published', 'Failed', 'Rejected', 'TopicQueued', 'Approved', 'Scheduled')
+2026-03-08 08:30:15.071 +05:00 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `t`.`Id`, `t`.`CreatedAt`, `t`.`Description`, `t`.`EpisodeId`, `t`.`IsUsed`, `t`.`Priority`, `t`.`TargetMoral`, `t`.`Title`, `t`.`UsedAt`
+FROM `TopicSeeds` AS `t`
+WHERE NOT (`t`.`IsUsed`)
+ORDER BY `t`.`Priority` DESC, `t`.`CreatedAt`
+LIMIT 1
+2026-03-08 08:30:15.161 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `c`.`Id`, `c`.`AvatarUrl`, `c`.`CreatedAt`, `c`.`Description`, `c`.`ImagePromptStyle`, `c`.`IsActive`, `c`.`Name`, `c`.`UpdatedAt`, `c`.`VoiceId`, `c`.`VoiceName`
+FROM `Characters` AS `c`
+WHERE `c`.`IsActive`
+ORDER BY `c`.`Name`
+2026-03-08 08:30:15.852 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[@p0='?' (Size = 4000), @p1='?' (DbType = DateTime), @p2='?' (Size = 4000), @p3='?' (Size = 4000), @p4='?' (DbType = DateTime), @p5='?' (DbType = Int32), @p6='?' (Size = 4000), @p7='?' (DbType = DateTime), @p8='?' (DbType = DateTime), @p9='?' (Size = 4000), @p10='?' (Size = 4000), @p11='?' (Size = 100), @p12='?' (Size = 50), @p13='?' (Size = 4000), @p14='?' (Size = 4000), @p15='?' (Size = 500), @p16='?' (DbType = Int32), @p17='?' (DbType = DateTime), @p18='?' (Size = 4000), @p19='?' (Size = 4000), @p20='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `Episodes` (`AudioMixPath`, `CreatedAt`, `CurrentStageError`, `Moral`, `PublishedAt`, `RetryCount`, `ReviewNotes`, `ReviewedAt`, `ScheduledPublishAt`, `SeoDescription`, `SeoTags`, `SeoTitle`, `Status`, `Summary`, `ThumbnailPath`, `Title`, `TopicSeedId`, `UpdatedAt`, `VideoPath`, `YouTubeUrl`, `YouTubeVideoId`)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17, @p18, @p19, @p20);
+SELECT `Id`
+FROM `Episodes`
+WHERE ROW_COUNT() = 1 AND `Id` = LAST_INSERT_ID();
+2026-03-08 08:30:15.929 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[@p21='?' (DbType = Int32), @p22='?' (DbType = Int32), @p23='?' (DbType = Int32), @p24='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SET AUTOCOMMIT = 1;
+INSERT INTO `EpisodeCharacters` (`CharactersId`, `EpisodesId`)
+VALUES (@p21, @p22),
+(@p23, @p24);
+2026-03-08 08:30:15.988 +05:00 [INF] Created episode #1 from topic 'Leo learns to count to 10'
+2026-03-08 08:30:16.022 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[@p8='?' (DbType = Int32), @p0='?' (DbType = DateTime), @p1='?' (Size = 4000), @p2='?' (DbType = Int32), @p3='?' (DbType = Boolean), @p4='?' (DbType = Int32), @p5='?' (Size = 500), @p6='?' (Size = 500), @p7='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='30']
+SET AUTOCOMMIT = 1;
+UPDATE `TopicSeeds` SET `CreatedAt` = @p0, `Description` = @p1, `EpisodeId` = @p2, `IsUsed` = @p3, `Priority` = @p4, `TargetMoral` = @p5, `Title` = @p6, `UsedAt` = @p7
+WHERE `Id` = @p8;
+SELECT ROW_COUNT();
+2026-03-08 08:30:16.076 +05:00 [INF] Enqueued full pipeline for episode #1
+2026-03-08 08:30:16.207 +05:00 [INF] Starting full pipeline for episode 1
+2026-03-08 08:30:16.463 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[@p0='?' (DbType = DateTime), @p1='?' (DbType = DateTime), @p2='?' (DbType = Int32), @p3='?' (Size = 4000), @p4='?' (Size = 4000), @p5='?' (Size = 50), @p6='?' (DbType = DateTime), @p7='?' (Size = 50)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `PipelineJobs` (`CompletedAt`, `CreatedAt`, `EpisodeId`, `ErrorMessage`, `LogOutput`, `Stage`, `StartedAt`, `Status`)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7);
+SELECT `Id`
+FROM `PipelineJobs`
+WHERE ROW_COUNT() = 1 AND `Id` = LAST_INSERT_ID();
+2026-03-08 08:30:16.673 +05:00 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-03-08 08:30:16.707 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s0`.`Id`, `s0`.`AudioMixPath`, `s0`.`CreatedAt`, `s0`.`CurrentStageError`, `s0`.`Moral`, `s0`.`PublishedAt`, `s0`.`RetryCount`, `s0`.`ReviewNotes`, `s0`.`ReviewedAt`, `s0`.`ScheduledPublishAt`, `s0`.`SeoDescription`, `s0`.`SeoTags`, `s0`.`SeoTitle`, `s0`.`Status`, `s0`.`Summary`, `s0`.`ThumbnailPath`, `s0`.`Title`, `s0`.`TopicSeedId`, `s0`.`UpdatedAt`, `s0`.`VideoPath`, `s0`.`YouTubeUrl`, `s0`.`YouTubeVideoId`, `s0`.`Id0`, `s1`.`Id`, `s1`.`ActionDescription`, `s1`.`BackgroundDescription`, `s1`.`DurationSeconds`, `s1`.`EpisodeId`, `s1`.`ImagePath`, `s1`.`ImagePromptUsed`, `s1`.`SceneNumber`, `s1`.`VideoClipPath`, `s1`.`Id0`, `s1`.`AudioPath`, `s1`.`CharacterName`, `s1`.`LineOrder`, `s1`.`SceneId`, `s1`.`Text`, `s1`.`Tone`, `s2`.`CharactersId`, `s2`.`EpisodesId`, `s2`.`Id`, `s2`.`AvatarUrl`, `s2`.`CreatedAt`, `s2`.`Description`, `s2`.`ImagePromptStyle`, `s2`.`IsActive`, `s2`.`Name`, `s2`.`UpdatedAt`, `s2`.`VoiceId`, `s2`.`VoiceName`, `p`.`Id`, `p`.`CompletedAt`, `p`.`CreatedAt`, `p`.`EpisodeId`, `p`.`ErrorMessage`, `p`.`LogOutput`, `p`.`Stage`, `p`.`StartedAt`, `p`.`Status`, `s0`.`CreatedAt0`, `s0`.`Description`, `s0`.`EpisodeId`, `s0`.`IsUsed`, `s0`.`Priority`, `s0`.`TargetMoral`, `s0`.`Title0`, `s0`.`UsedAt`
+FROM (
+    SELECT `e`.`Id`, `e`.`AudioMixPath`, `e`.`CreatedAt`, `e`.`CurrentStageError`, `e`.`Moral`, `e`.`PublishedAt`, `e`.`RetryCount`, `e`.`ReviewNotes`, `e`.`ReviewedAt`, `e`.`ScheduledPublishAt`, `e`.`SeoDescription`, `e`.`SeoTags`, `e`.`SeoTitle`, `e`.`Status`, `e`.`Summary`, `e`.`ThumbnailPath`, `e`.`Title`, `e`.`TopicSeedId`, `e`.`UpdatedAt`, `e`.`VideoPath`, `e`.`YouTubeUrl`, `e`.`YouTubeVideoId`, `t`.`Id` AS `Id0`, `t`.`CreatedAt` AS `CreatedAt0`, `t`.`Description`, `t`.`EpisodeId`, `t`.`IsUsed`, `t`.`Priority`, `t`.`TargetMoral`, `t`.`Title` AS `Title0`, `t`.`UsedAt`
+    FROM `Episodes` AS `e`
+    LEFT JOIN `TopicSeeds` AS `t` ON `e`.`TopicSeedId` = `t`.`Id`
+    WHERE `e`.`Id` = @__id_0
+    LIMIT 1
+) AS `s0`
+LEFT JOIN (
+    SELECT `s`.`Id`, `s`.`ActionDescription`, `s`.`BackgroundDescription`, `s`.`DurationSeconds`, `s`.`EpisodeId`, `s`.`ImagePath`, `s`.`ImagePromptUsed`, `s`.`SceneNumber`, `s`.`VideoClipPath`, `d`.`Id` AS `Id0`, `d`.`AudioPath`, `d`.`CharacterName`, `d`.`LineOrder`, `d`.`SceneId`, `d`.`Text`, `d`.`Tone`
+    FROM `Scenes` AS `s`
+    LEFT JOIN `DialogueLines` AS `d` ON `s`.`Id` = `d`.`SceneId`
+) AS `s1` ON `s0`.`Id` = `s1`.`EpisodeId`
+LEFT JOIN (
+    SELECT `e0`.`CharactersId`, `e0`.`EpisodesId`, `c`.`Id`, `c`.`AvatarUrl`, `c`.`CreatedAt`, `c`.`Description`, `c`.`ImagePromptStyle`, `c`.`IsActive`, `c`.`Name`, `c`.`UpdatedAt`, `c`.`VoiceId`, `c`.`VoiceName`
+    FROM `EpisodeCharacters` AS `e0`
+    INNER JOIN `Characters` AS `c` ON `e0`.`CharactersId` = `c`.`Id`
+) AS `s2` ON `s0`.`Id` = `s2`.`EpisodesId`
+LEFT JOIN `PipelineJobs` AS `p` ON `s0`.`Id` = `p`.`EpisodeId`
+ORDER BY `s0`.`Id`, `s0`.`Id0`, `s1`.`Id`, `s1`.`Id0`, `s2`.`CharactersId`, `s2`.`EpisodesId`, `s2`.`Id`
+2026-03-08 08:30:16.772 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[@p21='?' (DbType = Int32), @p0='?' (Size = 4000), @p1='?' (DbType = DateTime), @p2='?' (Size = 4000), @p3='?' (Size = 4000), @p4='?' (DbType = DateTime), @p5='?' (DbType = Int32), @p6='?' (Size = 4000), @p7='?' (DbType = DateTime), @p8='?' (DbType = DateTime), @p9='?' (Size = 4000), @p10='?' (Size = 4000), @p11='?' (Size = 100), @p12='?' (Size = 50), @p13='?' (Size = 4000), @p14='?' (Size = 4000), @p15='?' (Size = 500), @p16='?' (DbType = Int32), @p17='?' (DbType = DateTime), @p18='?' (Size = 4000), @p19='?' (Size = 4000), @p20='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET AUTOCOMMIT = 1;
+UPDATE `Episodes` SET `AudioMixPath` = @p0, `CreatedAt` = @p1, `CurrentStageError` = @p2, `Moral` = @p3, `PublishedAt` = @p4, `RetryCount` = @p5, `ReviewNotes` = @p6, `ReviewedAt` = @p7, `ScheduledPublishAt` = @p8, `SeoDescription` = @p9, `SeoTags` = @p10, `SeoTitle` = @p11, `Status` = @p12, `Summary` = @p13, `ThumbnailPath` = @p14, `Title` = @p15, `TopicSeedId` = @p16, `UpdatedAt` = @p17, `VideoPath` = @p18, `YouTubeUrl` = @p19, `YouTubeVideoId` = @p20
+WHERE `Id` = @p21;
+SELECT ROW_COUNT();
+2026-03-08 08:30:16.795 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[@__key_0='?' (Size = 200)], CommandType='"Text"', CommandTimeout='30']
+SELECT `a`.`Id`, `a`.`Category`, `a`.`CreatedAt`, `a`.`Description`, `a`.`DisplayName`, `a`.`IsRequired`, `a`.`IsSecret`, `a`.`Key`, `a`.`UpdatedAt`, `a`.`Value`
+FROM `AppSettings` AS `a`
+WHERE `a`.`Key` = @__key_0
+LIMIT 1
+2026-03-08 08:30:17.276 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[@p8='?' (DbType = Int32), @p0='?' (DbType = DateTime), @p1='?' (DbType = DateTime), @p2='?' (DbType = Int32), @p3='?' (Size = 4000), @p4='?' (Size = 4000), @p5='?' (Size = 50), @p6='?' (DbType = DateTime), @p7='?' (Size = 50)], CommandType='"Text"', CommandTimeout='30']
+SET AUTOCOMMIT = 1;
+UPDATE `PipelineJobs` SET `CompletedAt` = @p0, `CreatedAt` = @p1, `EpisodeId` = @p2, `ErrorMessage` = @p3, `LogOutput` = @p4, `Stage` = @p5, `StartedAt` = @p6, `Status` = @p7
+WHERE `Id` = @p8;
+SELECT ROW_COUNT();
+2026-03-08 08:30:17.519 +05:00 [ERR] Pipeline failed at stage "ScriptGeneration" for episode 1
+System.InvalidOperationException: API key for 'Anthropic' is not configured. Please add it in Settings.
+   at KidsCartoonPipeline.Infrastructure.Services.Settings.SettingsService.GetApiKeyAsync(String service) in F:\Projects\YT-Automation\backend\KidsCartoonPipeline.Infrastructure\Services\Settings\SettingsService.cs:line 46
+   at KidsCartoonPipeline.Infrastructure.Services.AI.ClaudeScriptService.GenerateScriptAsync(String topic, List`1 characters, String moral) in F:\Projects\YT-Automation\backend\KidsCartoonPipeline.Infrastructure\Services\AI\ClaudeScriptService.cs:line 27
+   at KidsCartoonPipeline.Infrastructure.Services.Pipeline.PipelineOrchestrator.RunStageAsync(Int32 episodeId, PipelineStage stage) in F:\Projects\YT-Automation\backend\KidsCartoonPipeline.Infrastructure\Services\Pipeline\PipelineOrchestrator.cs:line 103
+   at KidsCartoonPipeline.Infrastructure.Services.Pipeline.PipelineOrchestrator.RunStageAsync(Int32 episodeId, PipelineStage stage) in F:\Projects\YT-Automation\backend\KidsCartoonPipeline.Infrastructure\Services\Pipeline\PipelineOrchestrator.cs:line 177
+   at KidsCartoonPipeline.Infrastructure.Services.Pipeline.PipelineOrchestrator.RunFullPipelineAsync(Int32 episodeId) in F:\Projects\YT-Automation\backend\KidsCartoonPipeline.Infrastructure\Services\Pipeline\PipelineOrchestrator.cs:line 58
+2026-03-08 08:30:17.652 +05:00 [INF] Executed DbCommand (5ms) [Parameters=[@p21='?' (DbType = Int32), @p0='?' (Size = 4000), @p1='?' (DbType = DateTime), @p2='?' (Size = 4000), @p3='?' (Size = 4000), @p4='?' (DbType = DateTime), @p5='?' (DbType = Int32), @p6='?' (Size = 4000), @p7='?' (DbType = DateTime), @p8='?' (DbType = DateTime), @p9='?' (Size = 4000), @p10='?' (Size = 4000), @p11='?' (Size = 100), @p12='?' (Size = 50), @p13='?' (Size = 4000), @p14='?' (Size = 4000), @p15='?' (Size = 500), @p16='?' (DbType = Int32), @p17='?' (DbType = DateTime), @p18='?' (Size = 4000), @p19='?' (Size = 4000), @p20='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET AUTOCOMMIT = 1;
+UPDATE `Episodes` SET `AudioMixPath` = @p0, `CreatedAt` = @p1, `CurrentStageError` = @p2, `Moral` = @p3, `PublishedAt` = @p4, `RetryCount` = @p5, `ReviewNotes` = @p6, `ReviewedAt` = @p7, `ScheduledPublishAt` = @p8, `SeoDescription` = @p9, `SeoTags` = @p10, `SeoTitle` = @p11, `Status` = @p12, `Summary` = @p13, `ThumbnailPath` = @p14, `Title` = @p15, `TopicSeedId` = @p16, `UpdatedAt` = @p17, `VideoPath` = @p18, `YouTubeUrl` = @p19, `YouTubeVideoId` = @p20
+WHERE `Id` = @p21;
+SELECT ROW_COUNT();
+2026-03-08 08:54:58.650 +05:00 [INF] DB tables already exist. Exit install
+2026-03-08 08:54:58.810 +05:00 [INF] Starting Hangfire Server using job storage: 'Server: localhost@KidsCartoonPipeline'
+2026-03-08 08:54:58.811 +05:00 [INF] Using the following options for SQL Server job storage:
+2026-03-08 08:54:58.812 +05:00 [INF]     Queue poll interval: 00:00:15.
+2026-03-08 08:54:58.812 +05:00 [INF] Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2026-03-08 08:54:58.823 +05:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-03-08 08:54:58.827 +05:00 [INF] Hosting environment: Development
+2026-03-08 08:54:58.827 +05:00 [INF] Content root path: F:\Projects\YT-Automation\backend\KidsCartoonPipeline.Worker
+2026-03-08 08:54:58.835 +05:00 [INF] Server desktop-20mad7m:18080:427867dc successfully announced in 7.5805 ms
+2026-03-08 08:54:58.839 +05:00 [INF] Server desktop-20mad7m:18080:427867dc is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2026-03-08 08:54:59.128 +05:00 [INF] Server desktop-20mad7m:18080:427867dc all the dispatchers started
+2026-03-08 08:56:03.750 +05:00 [INF] DB tables already exist. Exit install
+2026-03-08 08:56:03.923 +05:00 [INF] Starting Hangfire Server using job storage: 'Server: localhost@KidsCartoonPipeline'
+2026-03-08 08:56:03.925 +05:00 [INF] Using the following options for SQL Server job storage:
+2026-03-08 08:56:03.926 +05:00 [INF]     Queue poll interval: 00:00:15.
+2026-03-08 08:56:03.927 +05:00 [INF] Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2026-03-08 08:56:03.943 +05:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-03-08 08:56:03.944 +05:00 [INF] Hosting environment: Development
+2026-03-08 08:56:03.945 +05:00 [INF] Content root path: F:\Projects\YT-Automation\backend\KidsCartoonPipeline.Worker
+2026-03-08 08:56:03.951 +05:00 [INF] Server desktop-20mad7m:41416:1f4d6784 successfully announced in 7.2044 ms
+2026-03-08 08:56:03.955 +05:00 [INF] Server desktop-20mad7m:41416:1f4d6784 is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2026-03-08 08:56:04.197 +05:00 [INF] Server desktop-20mad7m:41416:1f4d6784 all the dispatchers started
+2026-03-08 09:01:24.427 +05:00 [INF] DB tables already exist. Exit install
+2026-03-08 09:01:25.823 +05:00 [INF] Starting Hangfire Server using job storage: 'Server: localhost@KidsCartoonPipeline'
+2026-03-08 09:01:25.839 +05:00 [INF] Using the following options for SQL Server job storage:
+2026-03-08 09:01:25.859 +05:00 [INF]     Queue poll interval: 00:00:15.
+2026-03-08 09:01:25.901 +05:00 [INF] Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2026-03-08 09:01:26.004 +05:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-03-08 09:01:26.025 +05:00 [INF] Hosting environment: Development
+2026-03-08 09:01:26.036 +05:00 [INF] Content root path: F:\Projects\YT-Automation\backend\KidsCartoonPipeline.Worker
+2026-03-08 09:01:26.078 +05:00 [INF] Server desktop-20mad7m:45648:9bd69be1 successfully announced in 52.4699 ms
+2026-03-08 09:01:26.106 +05:00 [INF] Server desktop-20mad7m:45648:9bd69be1 is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2026-03-08 09:01:26.172 +05:00 [INF] 3 servers were removed due to timeout
+2026-03-08 09:01:26.742 +05:00 [INF] Server desktop-20mad7m:45648:9bd69be1 all the dispatchers started
+2026-03-08 09:01:27.011 +05:00 [WRN] Failed to process the job '4': an exception occurred. Retry attempt 5 of 10 will be performed in 00:06:26.
+System.TypeLoadException: Could not resolve type 'KidsCartoonPipeline.Worker.Jobs.PipelineTriggerJob' in assembly 'KidsCartoonPipeline.Worker, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null'.
+   at System.Reflection.TypeNameResolver.GetType(String escapedTypeName, ReadOnlySpan`1 nestedTypeNames, TypeName parsedName)
+   at System.Reflection.TypeNameResolver.GetSimpleType(TypeName typeName)
+   at System.Reflection.TypeNameResolver.Resolve(TypeName typeName)
+   at System.Reflection.TypeNameResolver.GetType(String typeName, Boolean throwOnError, Boolean ignoreCase, Assembly topLevelAssembly)
+   at Hangfire.Common.TypeHelper.TypeResolver(Assembly assembly, String typeName, Boolean ignoreCase) in C:\projects\hangfire-525\src\Hangfire.Core\Common\TypeHelper.cs:line 260
+   at System.Reflection.TypeNameResolver.GetType(String escapedTypeName, ReadOnlySpan`1 nestedTypeNames, TypeName parsedName)
+   at System.Reflection.TypeNameResolver.GetSimpleType(TypeName typeName)
+   at System.Reflection.TypeNameResolver.Resolve(TypeName typeName)
+   at System.Reflection.TypeNameResolver.GetType(String typeName, Func`2 assemblyResolver, Func`4 typeResolver, Assembly requestingAssembly, Boolean throwOnError, Boolean ignoreCase, Boolean extensibleParser)
+   at System.Type.GetType(String typeName, Func`2 assemblyResolver, Func`4 typeResolver, Boolean throwOnError)
+   at Hangfire.Common.TypeHelper.<>c.<DefaultTypeResolver>b__20_0(String name) in C:\projects\hangfire-525\src\Hangfire.Core\Common\TypeHelper.cs:line 83
+   at System.Collections.Concurrent.ConcurrentDictionary`2.GetOrAdd(TKey key, Func`2 valueFactory)
+   at Hangfire.Common.TypeHelper.DefaultTypeResolver(String typeName) in C:\projects\hangfire-525\src\Hangfire.Core\Common\TypeHelper.cs:line 75
+   at Hangfire.Storage.InvocationData.<>c.<CachedDeserializeMethod>b__33_0(MethodDeserializerCacheKey key) in C:\projects\hangfire-525\src\Hangfire.Core\Storage\InvocationData.cs:line 339
+   at System.Collections.Concurrent.ConcurrentDictionary`2.GetOrAdd(TKey key, Func`2 valueFactory)
+   at Hangfire.Storage.InvocationData.CachedDeserializeMethod(Func`2 typeResolver, String typeName, String methodName, String parameterTypes, Type& type, MethodInfo& methodInfo) in C:\projects\hangfire-525\src\Hangfire.Core\Storage\InvocationData.cs:line 335
+   at Hangfire.Storage.InvocationData.DeserializeJob() in C:\projects\hangfire-525\src\Hangfire.Core\Storage\InvocationData.cs:line 100
+2026-03-08 09:01:27.209 +05:00 [WRN] Failed to process the job '5': an exception occurred. Retry attempt 4 of 10 will be performed in 00:01:40.
+System.TypeLoadException: Could not resolve type 'KidsCartoonPipeline.Worker.Jobs.PipelineTriggerJob' in assembly 'KidsCartoonPipeline.Worker, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null'.
+   at System.Reflection.TypeNameResolver.GetType(String escapedTypeName, ReadOnlySpan`1 nestedTypeNames, TypeName parsedName)
+   at System.Reflection.TypeNameResolver.GetSimpleType(TypeName typeName)
+   at System.Reflection.TypeNameResolver.Resolve(TypeName typeName)
+   at System.Reflection.TypeNameResolver.GetType(String typeName, Boolean throwOnError, Boolean ignoreCase, Assembly topLevelAssembly)
+   at Hangfire.Common.TypeHelper.TypeResolver(Assembly assembly, String typeName, Boolean ignoreCase) in C:\projects\hangfire-525\src\Hangfire.Core\Common\TypeHelper.cs:line 260
+   at System.Reflection.TypeNameResolver.GetType(String escapedTypeName, ReadOnlySpan`1 nestedTypeNames, TypeName parsedName)
+   at System.Reflection.TypeNameResolver.GetSimpleType(TypeName typeName)
+   at System.Reflection.TypeNameResolver.Resolve(TypeName typeName)
+   at System.Reflection.TypeNameResolver.GetType(String typeName, Func`2 assemblyResolver, Func`4 typeResolver, Assembly requestingAssembly, Boolean throwOnError, Boolean ignoreCase, Boolean extensibleParser)
+   at System.Type.GetType(String typeName, Func`2 assemblyResolver, Func`4 typeResolver, Boolean throwOnError)
+   at Hangfire.Common.TypeHelper.<>c.<DefaultTypeResolver>b__20_0(String name) in C:\projects\hangfire-525\src\Hangfire.Core\Common\TypeHelper.cs:line 83
+   at System.Collections.Concurrent.ConcurrentDictionary`2.GetOrAdd(TKey key, Func`2 valueFactory)
+   at Hangfire.Common.TypeHelper.DefaultTypeResolver(String typeName) in C:\projects\hangfire-525\src\Hangfire.Core\Common\TypeHelper.cs:line 75
+   at Hangfire.Storage.InvocationData.<>c.<CachedDeserializeMethod>b__33_0(MethodDeserializerCacheKey key) in C:\projects\hangfire-525\src\Hangfire.Core\Storage\InvocationData.cs:line 339
+   at System.Collections.Concurrent.ConcurrentDictionary`2.GetOrAdd(TKey key, Func`2 valueFactory)
+   at Hangfire.Storage.InvocationData.CachedDeserializeMethod(Func`2 typeResolver, String typeName, String methodName, String parameterTypes, Type& type, MethodInfo& methodInfo) in C:\projects\hangfire-525\src\Hangfire.Core\Storage\InvocationData.cs:line 335
+   at Hangfire.Storage.InvocationData.DeserializeJob() in C:\projects\hangfire-525\src\Hangfire.Core\Storage\InvocationData.cs:line 100
+2026-03-08 09:01:27.382 +05:00 [INF] Starting full pipeline for episode 1
+2026-03-08 09:01:29.080 +05:00 [INF] Executed DbCommand (12ms) [Parameters=[@p0='?' (DbType = DateTime), @p1='?' (DbType = DateTime), @p2='?' (DbType = Int32), @p3='?' (Size = 4000), @p4='?' (Size = 4000), @p5='?' (Size = 50), @p6='?' (DbType = DateTime), @p7='?' (Size = 50)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `PipelineJobs` (`CompletedAt`, `CreatedAt`, `EpisodeId`, `ErrorMessage`, `LogOutput`, `Stage`, `StartedAt`, `Status`)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7);
+SELECT `Id`
+FROM `PipelineJobs`
+WHERE ROW_COUNT() = 1 AND `Id` = LAST_INSERT_ID();
+2026-03-08 09:02:09.888 +05:00 [INF] DB tables already exist. Exit install
+2026-03-08 09:02:10.310 +05:00 [INF] Starting Hangfire Server using job storage: 'Server: localhost@KidsCartoonPipeline'
+2026-03-08 09:02:10.313 +05:00 [INF] Using the following options for SQL Server job storage:
+2026-03-08 09:02:10.314 +05:00 [INF]     Queue poll interval: 00:00:15.
+2026-03-08 09:02:10.315 +05:00 [INF] Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2026-03-08 09:02:10.347 +05:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-03-08 09:02:10.349 +05:00 [INF] Hosting environment: Development
+2026-03-08 09:02:10.351 +05:00 [INF] Content root path: F:\Projects\YT-Automation\backend\KidsCartoonPipeline.Worker
+2026-03-08 09:02:10.363 +05:00 [INF] Server desktop-20mad7m:47988:87a9a845 successfully announced in 14.7888 ms
+2026-03-08 09:02:10.374 +05:00 [INF] Server desktop-20mad7m:47988:87a9a845 is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2026-03-08 09:02:10.629 +05:00 [INF] Server desktop-20mad7m:47988:87a9a845 all the dispatchers started
+2026-03-08 09:05:26.149 +05:00 [WRN] Failed to process the job '3': an exception occurred. Retry attempt 6 of 10 will be performed in 00:12:04.
+System.TypeLoadException: Could not resolve type 'KidsCartoonPipeline.Worker.Jobs.PipelineTriggerJob' in assembly 'KidsCartoonPipeline.Worker, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null'.
+   at System.Reflection.TypeNameResolver.GetType(String escapedTypeName, ReadOnlySpan`1 nestedTypeNames, TypeName parsedName)
+   at System.Reflection.TypeNameResolver.GetSimpleType(TypeName typeName)
+   at System.Reflection.TypeNameResolver.Resolve(TypeName typeName)
+   at System.Reflection.TypeNameResolver.GetType(String typeName, Boolean throwOnError, Boolean ignoreCase, Assembly topLevelAssembly)
+   at Hangfire.Common.TypeHelper.TypeResolver(Assembly assembly, String typeName, Boolean ignoreCase) in C:\projects\hangfire-525\src\Hangfire.Core\Common\TypeHelper.cs:line 260
+   at System.Reflection.TypeNameResolver.GetType(String escapedTypeName, ReadOnlySpan`1 nestedTypeNames, TypeName parsedName)
+   at System.Reflection.TypeNameResolver.GetSimpleType(TypeName typeName)
+   at System.Reflection.TypeNameResolver.Resolve(TypeName typeName)
+   at System.Reflection.TypeNameResolver.GetType(String typeName, Func`2 assemblyResolver, Func`4 typeResolver, Assembly requestingAssembly, Boolean throwOnError, Boolean ignoreCase, Boolean extensibleParser)
+   at System.Type.GetType(String typeName, Func`2 assemblyResolver, Func`4 typeResolver, Boolean throwOnError)
+   at Hangfire.Common.TypeHelper.<>c.<DefaultTypeResolver>b__20_0(String name) in C:\projects\hangfire-525\src\Hangfire.Core\Common\TypeHelper.cs:line 83
+   at System.Collections.Concurrent.ConcurrentDictionary`2.GetOrAdd(TKey key, Func`2 valueFactory)
+   at Hangfire.Common.TypeHelper.DefaultTypeResolver(String typeName) in C:\projects\hangfire-525\src\Hangfire.Core\Common\TypeHelper.cs:line 75
+   at Hangfire.Storage.InvocationData.<>c.<CachedDeserializeMethod>b__33_0(MethodDeserializerCacheKey key) in C:\projects\hangfire-525\src\Hangfire.Core\Storage\InvocationData.cs:line 339
+   at System.Collections.Concurrent.ConcurrentDictionary`2.GetOrAdd(TKey key, Func`2 valueFactory)
+   at Hangfire.Storage.InvocationData.CachedDeserializeMethod(Func`2 typeResolver, String typeName, String methodName, String parameterTypes, Type& type, MethodInfo& methodInfo) in C:\projects\hangfire-525\src\Hangfire.Core\Storage\InvocationData.cs:line 335
+   at Hangfire.Storage.InvocationData.DeserializeJob() in C:\projects\hangfire-525\src\Hangfire.Core\Storage\InvocationData.cs:line 100

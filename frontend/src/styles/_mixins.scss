@@ -1,0 +1,83 @@
+@import 'variables';
+
+// --- 🛠 Reusable Mixins (White Theme Focus) ---
+
+// 🏁 Clean Surface Card
+@mixin surface-card($padding: 1.5rem, $shadow: $shadow-md) {
+  background: $surface;
+  border: 1px solid $border-color;
+  border-radius: $radius-lg;
+  padding: $padding;
+  box-shadow: $shadow;
+  transition: $transition-base;
+}
+// 🍷 Legay Mappings (Transitioning to White Theme)
+.glass-panel, .glass-card {
+  @include surface-card;
+  background: white;
+  backdrop-filter: none;
+}
+
+// 🚀 Elegant Hover
+@mixin hover-soft-lift($dist: -4px) {
+  transition: $transition-base;
+  &:hover {
+    transform: translateY($dist);
+    box-shadow: $shadow-xl;
+    border-color: rgba($primary, 0.2);
+  }
+}
+
+// 🍷 Glassmorphism (Subtle for white theme)
+@mixin soft-glass($bg: rgba(255, 255, 255, 0.7), $blur: 10px) {
+  background: $bg;
+  backdrop-filter: blur($blur);
+  -webkit-backdrop-filter: blur($blur);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+// 🎯 Layout Helpers
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+// 📋 Scrollbar (Clean slate)
+@mixin custom-scrollbar {
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #cbd5e1; // slate 300
+    border-radius: 10px;
+    transition: background 0.2s ease;
+    &:hover {
+      background: #94a3b8; // slate 400
+    }
+  }
+}
+
+// 📉 Utility
+@mixin truncate($lines: 1) {
+  @if $lines == 1 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  } @else {
+    display: -webkit-box;
+    -webkit-line-clamp: $lines;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}

@@ -1,0 +1,42 @@
+@import 'variables';
+@import 'mixins';
+@import 'base';
+@import 'layout';
+@import 'sidebar';
+@import 'topbar';
+@import 'stats-card';
+@import 'episode-card';
+@import 'pipeline';
+@import 'pipeline-map';
+
+// --- 🧩 Component-specific Styles ---
+
+// Sidebar & Layout
+.app-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: $background;
+}
+
+.main-content {
+  flex: 1;
+  padding: 2rem;
+  margin-left: 280px; // Sidebar width
+  transition: margin-left 0.3s ease;
+}
+
+// Custom Utilities
+.text-gradient {
+  background: $primary-gradient;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-background-fill-color: transparent;
+  // Note: some browsers use -webkit-text-fill-color
+  color: transparent;
+}
+
+.glass-card {
+  @include surface-card;
+  @include hover-soft-lift;
+  background: white;
+}
