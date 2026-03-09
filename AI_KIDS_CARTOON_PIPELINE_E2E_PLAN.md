@@ -12,7 +12,7 @@
 3. [TDD Strategy & Testing Rules](#3-tdd-strategy--testing-rules)
 4. [Full Solution & File Tree](#4-full-solution--file-tree)
 5. [Database Schema](#5-database-schema)
-6. [Backend — .NET 9 API (Full Implementation)](#6-backend--net-9-api)
+6. [Backend — .NET 10 API (Full Implementation)](#6-backend--net-10-api)
 7. [Pipeline Worker Services](#7-pipeline-worker-services)
 8. [Frontend — React + Bootstrap 5](#8-frontend--react--bootstrap-5)
 9. [UI/UX Guidelines & Screen Specs](#9-uiux-guidelines--screen-specs)
@@ -58,17 +58,17 @@ The user should be able to:
 
 ### Backend
 ```
-Runtime:        .NET 9
-Web Framework:  ASP.NET Core 9 Web API (minimal API style with Controllers)
+Runtime:        .NET 10
+Web Framework:  ASP.NET Core 10 Web API (Controllers)
 ORM:            Entity Framework Core 9
 Database:       MySQL 8.x (via Pomelo.EntityFrameworkCore.MySql 9.x)
 Cache:          Microsoft.Extensions.Caching.Memory (IMemoryCache, built-in)
 Job Scheduling: Hangfire 1.8.x (with Hangfire.MySql storage)
 HTTP Client:    System.Net.Http.HttpClient (typed clients)
 JSON:           System.Text.Json
-Validation:     FluentValidation 11.x
+Validation:     FluentValidation 12.x
 Mapping:        Mapster 7.x
-Logging:        Serilog 4.x (console + file sinks)
+Logging:        Serilog 10.x (console + file sinks)
 Testing:        xUnit 2.9.x + Moq 4.20.x + FluentAssertions 6.x
 Test HTTP:      Microsoft.AspNetCore.Mvc.Testing
 ```
@@ -717,7 +717,7 @@ public class EpisodeConfiguration : IEntityTypeConfiguration<Episode>
 
 ---
 
-## 6. Backend — .NET 9 API
+## 6. Backend — .NET 10 API
 
 ### 6.1 `Program.cs` — Full Setup
 ```csharp
