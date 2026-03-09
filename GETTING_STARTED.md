@@ -72,6 +72,7 @@ Go to **Settings** in the sidebar. Enter your API keys in this order:
 | **OpenAI (DALL·E 3)** | Generates scene images | [platform.openai.com](https://platform.openai.com/api-keys) |
 | **ElevenLabs** | Generates character voices (TTS) | [elevenlabs.io](https://elevenlabs.io/subscription) |
 | **Suno** *(optional)* | Generates background music | — |
+| **Fal.ai** *(optional)* | Kling AI animation — character movement & lip sync | [fal.ai/dashboard](https://fal.ai/dashboard) |
 
 Click the **✓** button after each key to save. Use **Test Connection** to verify each one.
 
@@ -118,6 +119,7 @@ Click the **✓** button after each key to save. Use **Test Connection** to veri
 | Auto-run Pipeline | Enabled | Worker picks topics automatically |
 | Schedule | `*/30 * * * *` | How often to check for new work |
 | Max Concurrent | 1 | Episodes processing at the same time |
+| Video Engine | `FFmpeg` | `FFmpeg` = free 2D slideshow (no extra key needed). `Kling` = AI-animated with movement & lip sync (~$6/episode, requires Fal.ai key) |
 | Default Publish Time | 10:00 | When to schedule YouTube uploads |
 | Publish Days | Saturday, Sunday | Which days to publish |
 

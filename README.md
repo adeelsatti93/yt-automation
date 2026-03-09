@@ -33,6 +33,7 @@ You provide topics and characters. The pipeline handles everything else automati
 | OpenAI DALL·E 3 | Scene image generation |
 | ElevenLabs | Character text-to-speech (TTS) |
 | Suno *(optional)* | Background music generation |
+| Fal.ai + Kling *(optional)* | AI cartoon animation with character movement & lip sync |
 | YouTube Data API v3 | Uploading & scheduling videos |
 
 ---
@@ -137,6 +138,7 @@ API keys are stored in the database, **not in config files**. After the app is r
 | OpenAI | [platform.openai.com/api-keys](https://platform.openai.com/api-keys) |
 | ElevenLabs | [elevenlabs.io/subscription](https://elevenlabs.io/subscription) — Settings → API Key |
 | Suno | *(optional)* |
+| Fal.ai | *(optional)* — only needed if using Kling video engine. Get free $10 credits at [fal.ai/dashboard](https://fal.ai/dashboard) |
 
 3. Click **Test Connection** next to each key to verify it works.
 
@@ -207,6 +209,7 @@ In **Settings → Pipeline**:
 | Auto-run Pipeline | Off | Worker automatically picks queued topics |
 | Schedule (cron) | `*/30 * * * *` | How often the Worker checks for new work |
 | Max Concurrent Episodes | 1 | Episodes processed simultaneously |
+| Video Engine | `FFmpeg` | `FFmpeg` = free 2D slideshow. `Kling` = AI-animated video with movement & lip sync (~$6/episode, requires Fal.ai API key) |
 | Default Publish Time | 10:00 | Scheduled upload time on YouTube |
 | Publish Days | Saturday, Sunday | Days on which episodes are published |
 

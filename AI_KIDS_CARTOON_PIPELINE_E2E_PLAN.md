@@ -97,6 +97,13 @@ File Storage:     Local filesystem (./storage/ directory, Docker volume)
 FFmpeg:           ffmpeg 6.x (installed in Docker image)
 ```
 
+### External AI Services (added during implementation)
+```
+Fal.ai + Kling:   AI cartoon animation with character movement & lip sync
+                  Model: fal-ai/kling-video/v1/standard/image-to-video
+                  Optional — falls back to FFmpeg slideshow if key not set
+```
+
 ---
 
 ## 3. TDD Strategy & Testing Rules
@@ -1598,6 +1605,7 @@ public static readonly List<AppSetting> DefaultSettings = new()
     new() { Key="OpenAI:ApiKey", Category="ApiKeys", DisplayName="OpenAI API Key", IsSecret=true, IsRequired=true, Description="DALL-E 3 for image generation" },
     new() { Key="ElevenLabs:ApiKey", Category="ApiKeys", DisplayName="ElevenLabs API Key", IsSecret=true, IsRequired=true, Description="Text-to-speech for character voices" },
     new() { Key="Suno:ApiKey", Category="ApiKeys", DisplayName="Suno API Key", IsSecret=true, IsRequired=false, Description="Background music generation" },
+    new() { Key="Fal:ApiKey", Category="ApiKeys", DisplayName="Fal.ai API Key", IsSecret=true, IsRequired=false, Description="Required for Kling AI animation (get free $10 credits at fal.ai)" },
     new() { Key="YouTube:ClientId", Category="ApiKeys", DisplayName="YouTube Client ID", IsSecret=false, IsRequired=true, Description="Google OAuth Client ID" },
     new() { Key="YouTube:ClientSecret", Category="ApiKeys", DisplayName="YouTube Client Secret", IsSecret=true, IsRequired=true, Description="Google OAuth Client Secret" },
     new() { Key="YouTube:RefreshToken", Category="ApiKeys", DisplayName="YouTube Refresh Token", IsSecret=true, IsRequired=true, Description="OAuth refresh token for your channel" },
@@ -1608,6 +1616,7 @@ public static readonly List<AppSetting> DefaultSettings = new()
     new() { Key="Pipeline:MaxConcurrent", Category="Pipeline", DisplayName="Max Concurrent Episodes", Value="1", IsSecret=false },
     new() { Key="Pipeline:DefaultPublishTime", Category="Pipeline", DisplayName="Default Publish Time", Value="09:00", IsSecret=false },
     new() { Key="Pipeline:PublishDays", Category="Pipeline", DisplayName="Publish Days", Value="Saturday,Sunday", IsSecret=false },
+    new() { Key="Video:Provider", Category="Pipeline", DisplayName="Video Engine", Value="FFmpeg", IsSecret=false, Description="FFmpeg = 2D animated slideshow (free). Kling = AI animated video with lip sync (~$6/episode, requires Fal.ai API key)." },
     
     // Image settings
     new() { Key="Images:GlobalStyle", Category="Images", DisplayName="Global Art Style", Value="2D flat cartoon, bright saturated colors, Pixar-inspired, child-friendly, soft shadows, no text, no watermarks, 16:9 aspect ratio", IsSecret=false },
